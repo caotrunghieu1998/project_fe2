@@ -1,0 +1,193 @@
+.background-app{
+    z-index: 1;
+    position: fixed;
+   top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background-image: url("../images/original/full-hd-bg.png");
+    background-size: cover;
+}
+.bird{
+    position: absolute;
+    top: 250px;
+    left: 150px;
+    width: 38px;
+    height: 26px;
+    background-image: url("../images/original/bird.png");
+    background-size: cover;
+}
+.pipe-top, .pipe-bottom{
+    position: absolute;
+    left: 1600px;
+    width: 52px;
+    background-size: cover;
+}
+.pipe-top{
+    top: 0;
+    background-image: url("../images/original/pipe-top-1.png");
+    background-position: bottom;
+}
+.pipe-bottom{
+    bottom: 50px;
+    background-image: url("../images/original/pipe-bottom-1.png");
+}
+.foreground{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 50px;
+    background-image: url("../images/original/fg.png");
+    background-size: contain;
+    /* background-repeat: repeat-x; */
+}
+#game-app{
+    position: relative;
+}
+.scores{
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+}
+.tutorial{
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    background-color: yellow;
+    border: 3px solid orangered;
+    border-radius: 20px;
+}
+.start-screen{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
+}
+.start-screen .img-bg-start{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url("../images/original/background-watiing.jpg");
+    background-size: cover;
+    z-index: 1;
+    opacity: 0.8;
+}
+.start-screen .list-button button{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 2;
+   
+    font-weight: bold;
+   font-size: 1em;
+   letter-spacing: 0.1em;
+   text-decoration: none;
+   color: #ffffff;
+   display: inline-block;
+   padding: 10px 40px 10px 40px;
+   border: 3px solid #ffffff;
+   border-radius: 20px;
+}
+.choose-theme-screen{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 3;
+}
+.choose-theme-screen .img-choose-theme{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url("../images/original/background-watiing.jpg");
+    background-size: cover;
+    z-index: 1;
+}
+.choose-theme-screen .list-button button{
+    position: relative;
+    top: 50%;
+    left: 600px;
+    z-index: 2;
+    
+    width: 300px;
+    height: 100px;
+    font-weight: bold;
+   font-size: 1em;
+   letter-spacing: 0.1em;
+   text-decoration: none;
+   color: black;
+   display: inline-block;
+   padding: 10px 40px 10px 40px;
+   border: 3px solid black;
+   border-radius: 20px;
+}
+
+/* Nút back */
+.button-back{
+    background-image: url("../images/button/button-back.jpg");
+    background-size: cover;
+    position: absolute;
+    top: 100px;
+    left: 100px;
+    z-index: 10;
+    width: 100px;
+    height: 100px;
+    display: none;
+    transition: 1s;
+}
+
+.button-back:hover{
+    box-shadow: 30px 30px 100px 5px yellow,
+    -30px -30px 100px 5px yellow,
+    30px -30px 100px 5px yellow,
+    -30px 30px 100px 5px yellow;
+    animation: drop 2s;
+}
+
+/* Nút pause */
+.button-pause{
+    background-image: url("../images/button/pause.png");
+    background-size: cover;
+    position: absolute;
+    top: 5px;
+    left: 130px;
+    z-index: 10;
+    width: 30px;
+    height: 30px;
+    border-radius: 10px;
+    border: solid 0.5px yellowgreen;
+    display: none;
+}
+
+@keyframes drop {
+    0% {
+        transform: scale(1, 1);
+    }
+
+    30% {
+        transform: scale(1.5, 1.5);
+    }
+
+    50% {
+        transform: scale(1.2, 1.2);
+    }
+
+    75% {
+        transform: scale(1.5, 1.5);
+    }
+
+    100% {
+        transform: scale(1, 1);
+
+    }
+}
+
+

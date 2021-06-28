@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project team 7</title>
+    <script crossorigin src="js/react.js"></script>
+    <script crossorigin src="js/react-dom.js"></script>
+    <script src="js/browser.min.js"></script>
+    <link rel="stylesheet" href="js/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <!-- Nút back -->
+    <a href="#" class="button-back" title="Go back"></a>
+     <!-- Nút Pause game -->
+     <a href="#" class="button-pause" title="Pause"></a>
+    <!-- Màn hình chọn chủ đề  chơi -->
+    <div class="choose-theme-screen">
+        <div class="img-choose-theme"></div>
+        <div class="list-button">
+            <button type="button" onclick="choiseTheme('original')"
+                class="btn btn-warning theme-original">Original</button><br>
+            <button type="button" onclick="choiseTheme('greek-times')" class="btn btn-warning theme-original">Greek
+                Times</button><br>
+            <button type="button" onclick="choiseTheme('among-us')" class="btn btn-warning">Among Us</button><br>
+            <button type="button" onclick="choiseTheme('desert')" class="btn btn-warning">Desert</button>
+        </div>
+    </div>
+    <!-- Màn hình trc khi vào game -->
+    <div class="start-screen">
+        <div class="img-bg-start"></div>
+        <div class="list-button">
+            <button type="button" onclick="letStart()" class="btn btn-warning">Let's Start</button>
+        </div>
+    </div>
+    <div id="root"></div>
+    <div id="tutorial"></div>
+    <!-- Âm thanh nhạc nền -->
+    <audio id="autoplay" autoplay loop>
+        <source src="mp3/original/bg-music.mp3" type="audio/mpeg">
+    </audio>
+    <!-- Âm thanh khi vượt qua 1 ống -->
+    <audio id="sound-get-scores">
+        <source src="mp3/original/get-scores.mp3" type="audio/mpeg">
+    </audio>
+</body>
+<script src="js/jquery-3.3.1.slim.min.js"></script>
+<script src="js/popper.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/react_render.js" type="text/babel"></script>
+<script src="js/function.js"></script>
+
+</html>

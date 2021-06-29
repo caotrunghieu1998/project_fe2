@@ -37,8 +37,18 @@
             <button type="button" onclick="letStart()" class="btn btn-warning">Let's Start</button>
         </div>
     </div>
+    <!-- Khu vực giao diện của game (Render = ReactJS) -->
     <div id="root"></div>
-    <div id="tutorial"></div>
+    <!-- Menu ingame -->
+    <div id="menu-game">
+        <div class="menu-game-name">
+            <img class="img-fluid" src="images/menu-game/menu-name.jpg" alt="">
+        </div>
+        <div class="menu-game-button" title="Resume"><p>Resume</p></div>
+        <div class="menu-game-button" title="Replay"><p>Replay</p></div>
+        <div class="menu-game-button" title="On/off music"><p>On/off music</p></div>
+        <div class="menu-game-button" title="Exit"><p>Exit</p></div>
+    </div>
     <!-- Âm thanh nhạc nền -->
     <audio id="autoplay" autoplay loop>
         <source src="mp3/original/bg-music.mp3" type="audio/mpeg">

@@ -6,13 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Project team 7</title>
+    <link rel="icon" href="images/favicon.ico">
     <script crossorigin src="js/react.js"></script>
     <script crossorigin src="js/react-dom.js"></script>
     <script src="js/browser.min.js"></script>
     <link rel="stylesheet" href="js/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
-
+<!-- Hiệu ứng pháo hoa -->
+<div class="pyro"><div class="before"></div><div class="after"></div></div>
 <body>
     <!-- Nút back -->
     <a href="#" class="button-back" title="Go back"></a>
@@ -39,6 +41,18 @@
     </div>
     <!-- Khu vực giao diện của game (Render = ReactJS) -->
     <div id="root"></div>
+    <!-- Màn hình điểm số -->
+    <div id="scores-screen">
+        <p>Your scores:<br><span class="scores-total">500</span></p>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="scores-screen-button" title="Replay"><p>Replay</p></div>
+            </div>
+            <div class="col-md-6">
+                <div class="scores-screen-button" title="Exit"><p>Exit</p></div>
+            </div>
+        </div>
+    </div>
     <!-- Menu ingame -->
     <div id="menu-game">
         <div class="menu-game-name">

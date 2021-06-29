@@ -17,7 +17,6 @@ const Game = React.createClass({
                 <Pipe_Bottom />
                 <Foreground />
                 <Scores />
-                <ButtonMusic />
                 <Tutorial />
             </div>
         )
@@ -93,14 +92,6 @@ const Tutorial = React.createClass({
                     </tr>
                 </div>
             </div>
-        )
-    }
-
-});
-const ButtonMusic = React.createClass({
-    render: () => {
-        return (
-            <button type="button" className="btn btn-primary btn-music">Turn off music</button>
         )
     }
 

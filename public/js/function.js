@@ -7,9 +7,9 @@ let pipe_location = 1800;
 //Khoảng các giữa 2 ống
 const distance_between_pipe = 400;
 //Số lượng các ống
-const pipe_number = 10;
+const pipe_number = 2;
 //Khoảng các giữa 2 ống bot và top
-const distance_top_bottom = 100;
+const distance_top_bottom = 200;
 //Thời gian chym và các ống di chuyển (mili giây)
 const time_animotion = 100;
 //Thứ tự ống tương tác với Trym hiện tại
@@ -21,29 +21,22 @@ let game_theme = "original";
 //Mảng danh sách ống random
 const pipe_top_array = ['pipe-top-1.png', 'pipe-top-2.png'];
 const pipe_bottom_array = ['pipe-bottom-1.png', 'pipe-bottom-2.png'];
-//Lưu giá trị màn hình
-let screen_number = 1;
+//Lưu giá trị nhạc
+let music_status = `On`;
+//game animation
+let game_animation;
 
 
 //Sự kiện khi nhấn 1 phím gì đó trên bàn phím
 const keyUpSpace = document.addEventListener('keyup', function (event) {
-    //Nếu game thua rồi thì nhấn tới mai cũng không được
-    if (game_status == "Lost") {
-        turnOffOriginalMusic();
-        alert("Loser");
-        return;
-    }
-    if (game_status == "Win") {
-        turnOffOriginalMusic();
-        alert("Winner");
-        return;
-    }
-    //Nút tắt/mở nhạc chỉ có hiệu lực khi game đang chơi hoặc đang Pause
-    if (game_status == "Playing" || game_status == "Pause") {
-        //Nhấn nút enter nhỏ bên tay phải để tắt/mở nhạc
-        if (event.code == 'NumpadEnter') {
-            let btn = document.querySelector(".btn-music");
-            btn.click();
+    //Nhấn nút enter nhỏ bên tay phải để tắt/mở nhạc
+    if (event.code == 'NumpadEnter') {
+        if (music_status == "On") {
+            turnOffOriginalMusic();
+            music_status = "Off";
+        } else {
+            turnOnOriginalMusic();
+            music_status = "On";
         }
     }
     //Các Nút Animotion chỉ có hiệu lực khi game đang đc chơi
@@ -104,7 +97,15 @@ const PipeCountSetUp = (num) => {
 }
 //Chuyển động của các ống nước
 const pipe_animation = () => {
-    pipeStartX += 15;
+    if (number_pipe <= 10) {
+        pipeStartX += 15;
+    } else if (number_pipe <= 20) {
+        pipeStartX += 20;
+    } else if (number_pipe <= 30) {
+        pipeStartX += 25;
+    } else {
+        pipeStartX += 30;
+    }
     let pipe_top = document.querySelectorAll(".pipe-top");
     let pipe_bottom = document.querySelectorAll(".pipe-bottom");
     pipe_top.forEach(pipe => {
@@ -149,12 +150,11 @@ const checkBirdGoToPipe = () => {
     }
     if (pipePosition.left < birdPosition.left && number_pipe != pipe_top.length) {
         number_pipe++;
-        if (game_status == "Playing") {
-            const music = document.querySelector("#sound-get-scores");
-            music.autoplay = true;
-            music.volume = 0.5;
-            music.load();
-        }
+        //Mở nhạc qua 1 ống
+        const music = document.querySelector("#sound-get-scores");
+        music.autoplay = true;
+        music.volume = 0.5;
+        music.load();
         document.querySelector(".scores").innerHTML = `<b>Scores: <i>${number_pipe}</i></b>`;
         if (number_pipe == pipe_top.length) {
             game_status = "Win";
@@ -164,44 +164,52 @@ const checkBirdGoToPipe = () => {
     }
     return false;
 }
-//Hàm lập lại animotion
-function animotion_start() {
-    setInterval(() => {
+//Hàm chạy game
+const app_run = () => {
+    game_status = "Playing";
+    turnOnOriginalMusic();
+    game_animation = setInterval(() => {
         //Nếu thua game thì k Set animation
         if (checkGameOver()) {
             turnOffOriginalMusic();
-            clearInterval(animotion_start);
-        } else if (game_status == "Playing") {
+            clearInterval(game_animation);
+            //Show menu điểm ra
+            document.querySelector(".scores-total").textContent = number_pipe;
+            if (game_status == `Win`) {
+                alert("Wow, you win !!");
+                document.querySelector(".scores-total").textContent = pipe_number;
+                document.querySelector(".pyro .before").style.display = "inline";
+                document.querySelector(".pyro .after").style.display = "inline";
+            }
+            document.querySelector('#scores-screen').style.display = 'inline';
+        } else if (game_status == "Playing") { 
             pipe_animation();
             bird_animation();
         }
-    }, time_animotion)
-};
-//Hàm chạy game
-const app_run = () => {
-    if (game_status == "Playing") {
-        alert("Start");
-        setTimeout(() => {
-            setUpMore();
-            PipeCountSetUp(pipe_number);
-            PipeSetUp();
-            setUpMusic();
-            animotion_start();
-        }, 1000);
-    }
+    }, time_animotion);
+    alert("Start");
+    setTimeout(() => {
+        setUpMore();
+        PipeCountSetUp(pipe_number);
+        PipeSetUp();
+        game_animation;
+    }, 1000);
+
 }
-// //Hàm trả game về mặc định (K hoat động)
-// const setDefaultGame = () => {
-//     clearInterval(animotion_start);
-//     let bird = document.querySelector(".bird");
-//     bird.style.top = "250px";
-//     bird.style.left = "150px";
-//     document.querySelector(".pipe-top-item").innerHTML = `<div class ="pipe-top"></div>`;
-//     document.querySelector(".pipe-bottom-item").innerHTML = `<div class ="pipe-bottom"></div>`;
-//     birdStartY = 0;
-//     pipeStartX = 0;
-//     number_pipe = 0;
-// };
+//Hàm trả game về mặc định
+const setDefaultGame = () => {
+    clearInterval(game_animation);
+    let bird = document.querySelector(".bird");
+    bird.style.top = "250px";
+    bird.style.left = "150px";
+    bird.style.transform = `translateY(0px)`;
+    document.querySelector(".pipe-top-item").innerHTML = `<div class ="pipe-top"></div>`;
+    document.querySelector(".pipe-bottom-item").innerHTML = `<div class ="pipe-bottom"></div>`;
+    birdStartY = 0;
+    pipeStartX = 0;
+    number_pipe = 0;
+    pipe_location = 1800;
+};
 //Hàm random số
 function RandomNumber(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -219,20 +227,6 @@ const turnOffOriginalMusic = () => {
     auto_play.autoplay = false;
     auto_play.load();
 }
-//Setup nhạc nền
-const setUpMusic = () => {
-    let btn = document.querySelector(".btn-music");
-    btn.addEventListener('click', () => {
-        if (btn.textContent == 'Turn on music') {
-            btn.textContent = 'Turn off music';
-            turnOnOriginalMusic();
-        } else {
-            btn.textContent = 'Turn on music';
-            turnOffOriginalMusic();
-        }
-        btn.blur();
-    });
-}
 //Sự kiện khi nhấn vào nut Start
 function letStart() {
     let start_screen = document.querySelector(".start-screen");
@@ -249,8 +243,6 @@ function letStart() {
     app_run();
 }
 function choiseTheme(theme) {
-    //Chuyển qua màn hình 2
-    screen_number = 2;
     //Lưu chủ đề chơi lại
     game_theme = theme;
     //Set Các giá trị về giá trị mặc định
@@ -325,6 +317,9 @@ const Continued = () => {
 //Sử lý sự kiện cho button pause
 let button_pause = document.querySelector(".button-pause");
 button_pause.addEventListener(`click`, (e) => {
+    //Tắt pháo hoa
+    document.querySelector(".pyro .before").style.display = "none";
+    document.querySelector(".pyro .after").style.display = "none";
     e.preventDefault();
     button_pause.style.backgroundImage = `url("images/button/continue.gif")`;
     button_pause.title = "Game Paused";
@@ -341,18 +336,29 @@ let menu_game_button = document.querySelectorAll(".menu-game-button");
 menu_game_button.forEach(button => {
     button.addEventListener('click', () => {
         const button_value = button.textContent;
+        let button_pause = document.querySelector(".button-pause");
         //Nút Resume
         if (button_value == 'Resume') {
-            let button_pause = document.querySelector(".button-pause");
             button_pause.style.backgroundImage = `url("images/button/pause.png")`;
             button_pause.title = "Pause";
             document.querySelector('#menu-game').style.display = `none`;
             Continued();
         } else if (button_value == 'Replay') {
             alert("Replay");
-        }else if (button_value == 'On/off music') {
-            let btn = document.querySelector(".btn-music");
-            btn.click();
+            setDefaultGame();
+            app_run();
+            document.querySelector('#menu-game').style.display = `none`;
+            button_pause.style.backgroundImage = `url("images/button/pause.png")`;
+            document.querySelector('#scores-screen').style.display = 'none';
+        } else if (button_value == 'On/off music') {
+            if (music_status == "On") {
+                turnOffOriginalMusic();
+                music_status = "Off";
+            } else {
+                turnOnOriginalMusic();
+                music_status = "On";
+            }
+
         } else if (button_value == 'Exit') {
             if (confirm('Are you sure you want to exit ?')) {
                 alert("Exit !!");
@@ -360,6 +366,31 @@ menu_game_button.forEach(button => {
             }
         }
 
+    });
+});
+//Xử lý các button trong bảng điểm
+let btn_scores_menu = document.querySelectorAll(".scores-screen-button");
+btn_scores_menu.forEach(button => {
+    button.addEventListener('click', () => {
+        const btn_value = button.textContent;
+        if (btn_value == `Replay`) {
+            alert("Replay");
+            let bird = document.querySelector(".bird");
+            bird.style.top = "250px";
+            bird.style.left = "150px";
+            //Tắt pháo hoa
+            document.querySelector(".pyro .before").style.display = "none";
+            document.querySelector(".pyro .after").style.display = "none";
+
+            setDefaultGame();
+            app_run();
+            document.querySelector('#scores-screen').style.display = 'none';
+        } else {
+            if (confirm('Are you sure you want to exit ?')) {
+                alert("Exit !!");
+                location.reload();
+            }
+        }
     });
 });
 
